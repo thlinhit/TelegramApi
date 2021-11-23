@@ -7,6 +7,9 @@
  */
 package org.telegram.api.contacts;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.telegram.api.contact.TLContact;
 import org.telegram.api.user.TLAbsUser;
 import org.telegram.tl.StreamingUtils;
@@ -17,66 +20,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Current user contacts list and information on the users
- * @author Ruben Bermudez
- * @version 2.0
- * @date 02 of May of 2015
- */
+@NoArgsConstructor
+@Getter
+@Setter
 public class TLContacts extends TLAbsContacts {
     /**
      * The constant CLASS_ID.
      */
     public static final int CLASS_ID = 0x6f8b8cb2;
 
-    private TLVector<TLContact> contacts; ///< List of contacts
-    private TLVector<TLAbsUser> users; ///< User references in the list of contacts
-
-    /**
-     * Instantiates a new TL contacts.
-     */
-    public TLContacts() {
-        super();
-    }
+    private TLVector<TLContact> contacts;
+    private TLVector<TLAbsUser> users;
 
     public int getClassId() {
         return CLASS_ID;
-    }
-
-    /**
-     * Gets contacts.
-     *
-     * @return the contacts
-     */
-    public TLVector<TLContact> getContacts() {
-        return this.contacts;
-    }
-
-    /**
-     * Sets contacts.
-     *
-     * @param contacts the contacts
-     */
-    public void setContacts(TLVector<TLContact> contacts) {
-        this.contacts = contacts;
-    }
-
-    /**
-     * Gets users.
-     *
-     * @return the users
-     */
-    public TLVector<TLAbsUser> getUsers() {
-        return this.users;
-    }
-
-    /**
-     * Sets users.
-     *
-     * @param users the users
-     */
-    public void setUsers(TLVector<TLAbsUser> users) {
-        this.users = users;
     }
 
     public void serializeBody(OutputStream stream)
@@ -87,8 +44,8 @@ public class TLContacts extends TLAbsContacts {
 
     public void deserializeBody(InputStream stream, TLContext context)
             throws IOException {
-        this.contacts = (TLVector<TLContact>) StreamingUtils.readTLVector(stream, context);
-        this.users = (TLVector<TLAbsUser>) StreamingUtils.readTLVector(stream, context);
+        this.contacts = StreamingUtils.readTLVector(stream, context, TLContact.class);
+        this.users = StreamingUtils.readTLVector(stream, context, TLAbsUser.class);
     }
 
     public String toString() {

@@ -25,7 +25,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
 # Eclipse Core
 .project
 
@@ -98,6 +97,7 @@ local.properties
 # IntelliJ
 /out/
 /target/
+.idea/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
